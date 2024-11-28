@@ -17,6 +17,13 @@ public class GamePanel extends JPanel {
     }
 
     public void paintComponent(Graphics g) {
+        int W = field.width;
+        int H = field.height;
         super.paintComponent(g);
+        // TODO:  Coord en java pour affichage est l'inverse du jeu 
+        for (Block b: field.getBlocks()) {
+            g.fillRect(W - b.getX(), H - b.getY(), b.getWidth(), BLOCK_HEIGHT);
+        }
+        g.fillOval((W - axel.getX()) - AXEL_WIDTH/2, (H - axel.getY()) - AXEL_HEIGHT, AXEL_WIDTH, AXEL_HEIGHT);
     }
 }
