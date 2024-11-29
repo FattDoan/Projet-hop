@@ -1,4 +1,3 @@
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.ArrayList;
 
 public class Field {
@@ -16,18 +15,14 @@ public class Field {
         
         int altitude = START_ALTITUDE;
         while (altitude < height) {
-            int blockWidth = randNum(45, 90);
-            int x = randNum(0, width - blockWidth);
+            int blockWidth = Utils.randNum(45, 90);
+            int x = Utils.randNum(0, width - blockWidth);
             if (altitude == START_ALTITUDE) {
                 x = (blockWidth + width)/2;
             }
             Blocks.add(new Block(x, altitude, blockWidth));
             altitude += ALTITUDE_GAP;
         }
-    }
-
-    public static int randNum(int a, int b) { //[a, b] inclus
-        return ThreadLocalRandom.current().nextInt(a, b + 1);
     }
 
     public ArrayList<Block> getBlocks() {

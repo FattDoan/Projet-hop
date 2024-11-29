@@ -1,5 +1,5 @@
 public class Axel {
-    public static final double MAX_FALL_SPEED = -800; // pixels/s
+    public static final double MAX_FALL_SPEED = -600; // pixels/s
     public static final double JUMP_SPEED = 800; // pixels/s
     public static final double GRAVITY = 25; // pixels/s
     public static final double DIVE_SPEED = 3 * GRAVITY; // pixels/s   
