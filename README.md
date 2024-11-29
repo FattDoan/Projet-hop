@@ -62,7 +62,7 @@ I changed DELAY = 15 so it gives a bit more than 60fps because why not?
 
 ##### SPEED in pixels/second
 
-Logically, Axel speed as well as game constants such as GRAVITY and DIVE_SPEED should be calculated in pixels/second and NOT pixels/frame. This makes our game physics aren't affected by how fast the game is rendered (25fps or 60fps should not make the difference).
+Logically, Axel speed as well as game constants such as GRAVITY and DIVE_SPEED should be calculated in pixels/second and NOT pixels/frame. This helps our game's physics not be affected by how fast the game is rendered (25fps or 60fps should be the same).
 
 However, Axel position needs to be updated at each frame, therefore its new position is calculated as:
 
@@ -72,7 +72,7 @@ y += ySpeed * (double)(DELAY/1000);
 // (xSpeed, ySpeed) are double but (x,y) coord must be int
 ```
 
-**TODO**: this can cause LATERAL ACCELERATION, xSpeed = -LATERAL_SPEED or = LATERAL_SPEED to disable it.
+**TODO**: this can cause LATERAL ACCELERATION, xSpeed = -LATERAL_SPEED and = LATERAL_SPEED to disable it.
 
 xSpeed -= LATERAL_SPEED when LEFT arrow key is pressed
 
