@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 public class Hop {
     public static final int WIDTH = 400;
     public static final int HEIGHT = 600;
-    public static final int DELAY = 40;
+    public static final int DELAY = 15;
 
     private final JFrame frame;
     private final Field field;
@@ -19,8 +19,10 @@ public class Hop {
         this.gamePanel = new GamePanel(field, axel);
 
         this.frame = new JFrame("Hop!");
-        frame.add(gamePanel);
-        frame.pack();
+		frame.add(gamePanel);
+        frame.addKeyListener(gamePanel);
+		frame.setFocusable(true);
+		frame.pack();
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }

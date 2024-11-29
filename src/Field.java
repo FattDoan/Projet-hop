@@ -16,8 +16,8 @@ public class Field {
         
         int altitude = START_ALTITUDE;
         while (altitude < height) {
-            int x = randNum(0, width);
-            int blockWidth = randNum(50, 80);
+            int blockWidth = randNum(45, 90);
+            int x = randNum(0, width - blockWidth);
             if (altitude == START_ALTITUDE) {
                 x = (blockWidth + width)/2;
             }
@@ -34,7 +34,7 @@ public class Field {
         return Blocks;
     }
 
-    private int x, y;
+    private int x, y; // WTF is this for?
 
     private boolean falling; // 
     private boolean jumping; // set true when up; up speed = max, falli
