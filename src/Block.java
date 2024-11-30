@@ -1,6 +1,7 @@
 public class Block {
-    private final int x, y; // position horizontale / altitude
-    private final int width; // largeur
+    private final int x; // position horizontale / altitude
+    private int y;
+	private final int width; // largeur
 
     public Block(int x, int y, int width) {
         this.x = x;
@@ -10,5 +11,6 @@ public class Block {
 
     public int getX() { return x; }
     public int getY() { return y; }
+	public void setY(int newY) { this.y = newY; }
     public int getWidth() { return width; }
 }

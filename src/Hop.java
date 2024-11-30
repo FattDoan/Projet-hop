@@ -15,7 +15,7 @@ public class Hop {
 
     public Hop() {
         this.field = new Field(WIDTH, HEIGHT);
-        this.axel = new Axel(field, WIDTH/2, field.START_ALTITUDE);
+        this.axel = new Axel(field, WIDTH/2, Field.START_ALTITUDE);
         this.gamePanel = new GamePanel(field, axel);
 
         this.frame = new JFrame("Hop!");
@@ -28,8 +28,8 @@ public class Hop {
     }
 
     public void round() {
-        axel.update();
-        field.update();
+	    field.update();
+		axel.update();
         frame.repaint();
     }
 

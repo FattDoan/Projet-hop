@@ -17,6 +17,9 @@ public class GamePanel extends JPanel implements KeyListener {
         setPreferredSize(new Dimension(field.width, field.height));
     }
 
+	public static int getBlockHeight() {
+		return BLOCK_HEIGHT;
+	}
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         // <!> ATTENTION:  Coordinate system in JPanel is different from Field
@@ -24,12 +27,11 @@ public class GamePanel extends JPanel implements KeyListener {
 		//     while in Field, (0,0) is the bottom-left
 		// We need to convert the coordinates ONLY in paintComponent (rendering the graphics)
 		// The actual calculation of game physics should only be done in Field coordinates system
-        int W = field.width;
         int H = field.height;
 		for (Block b: field.getBlocks()) {
-            g.fillRect(W - b.getX(), H - b.getY(), b.getWidth(), BLOCK_HEIGHT);
+            g.fillRect(b.getX(), H - b.getY(), b.getWidth(), BLOCK_HEIGHT);
         }
-        g.fillOval((W - axel.getX()) - AXEL_WIDTH/2, (H - axel.getY()) - AXEL_HEIGHT, AXEL_WIDTH, AXEL_HEIGHT);
+        g.fillOval(axel.getX() - AXEL_WIDTH/2, (H - axel.getY()) - AXEL_HEIGHT, AXEL_WIDTH, AXEL_HEIGHT);
     }
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();

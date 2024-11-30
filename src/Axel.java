@@ -4,14 +4,14 @@ public class Axel {
     public static final double GRAVITY = 25; // pixels/s
     public static final double DIVE_SPEED = 3 * GRAVITY; // pixels/s   
     public static final double LATERAL_SPEED = 300; // pixels/s
-
+	public static final double MAX_JUMP_TIMES = 2; // allow double jumps
 
     private int x, y;
  	private double xSpeed, ySpeed;
 
     private boolean jumping;
     private boolean diving;
-	private boolean inAir;
+	private boolean onBlock;
 	private int numJumps; // allow double jumps
     private boolean left; // go left
     private boolean right;// go right
@@ -24,8 +24,9 @@ public class Axel {
         this.field = f;
         this.x = x;
         this.y = y;
+		this.numJumps = 2;
 		this.xSpeed = this.ySpeed = 0;
-		this.inAir = false;
+		this.onBlock = true;
         this.surviving = true;
     }
 
@@ -41,19 +42,37 @@ public class Axel {
 			xSpeed = 0;
 		}
 		if (left == true) {
-			xSpeed = LATERAL_SPEED;
-		}
-		if (right == true) {
 			xSpeed = -LATERAL_SPEED;
 		}
+		if (right == true) {
+			xSpeed = LATERAL_SPEED;
+		}
 		if (jumping == true) {
-			ySpeed += JUMP_SPEED;
-			jumping = false;
+			if (onBlock == true) numJumps = 0;
+			if (numJumps < MAX_JUMP_TIMES) {
+				ySpeed += JUMP_SPEED;
+				numJumps++;
+				jumping = false;
+			}
 		}
 		if (diving == true) {
 			ySpeed -= DIVE_SPEED;
 			// this will keep diving until the player releases the key
 		}
+	}
+	public void checkCollision() {
+		if (ySpeed < 0) {
+			for (Block b: field.getBlocks()) {
+				if ( Math.abs(this.y - b.getY()) <= GamePanel.getBlockHeight()/2 && 
+					 b.getX() <= this.x && this.x <= b.getX() + b.getWidth()) {
+					ySpeed = 0;
+					y = b.getY();
+					onBlock = true;
+					break;
+				}
+			}
+		}
+		else onBlock = false;
 	}
     public void update() { 
 		computeMove();
@@ -65,8 +84,10 @@ public class Axel {
 		x = Math.max(x, 0);
 		x = Math.min(x, field.width);
 		y = Math.max(y, 0);
-		if (y == 0) { //TODO: not inAir
+		if (y == 0) {
 			ySpeed = 0;
 		}
+
+		checkCollision();
 	}
 }
