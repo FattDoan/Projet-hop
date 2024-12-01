@@ -30,8 +30,10 @@ public class Axel {
         this.surviving = true;
     }
 
-    public int getX() { return x; }
-    public int getY() { return y; }
+    public int getX() 				{ return x; }
+    public int getY() 				{ return y; }
+	public boolean isOnBlock() 		{ return onBlock; }
+	public boolean isSurviving() 	{ return surviving; }
 	public void setJumping(boolean val) { jumping = val; }
 	public void setDiving(boolean val) 	{ diving = val; }
 	public void setLeft(boolean val) 	{ left = val; }
@@ -83,11 +85,10 @@ public class Axel {
 		
 		x = Math.max(x, 0);
 		x = Math.min(x, field.width);
-		y = Math.max(y, 0);
-		if (y == 0) {
-			ySpeed = 0;
-		}
 
 		checkCollision();
+		if (y < 0) {
+			surviving = false;
+		}
 	}
 }

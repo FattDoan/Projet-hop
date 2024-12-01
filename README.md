@@ -1,5 +1,17 @@
 # Projet-hop
 
+> Current process: Simulated 169% of the demo. Bonus features to be added
+
+## UPDATES (PLEASE READ)
+
+-  checkCollision delta (la différence entre Axel y et le Block y) est Block.HEIGHT/2 -> tout au long des tests, il a été prouvé que c'était le plus fiable.
+
+- Le bloc dont la valeur y < 0 est supprimé (à l'avant de la liste chaînée Blocks) et s'il y a assez de place en haut, un bloc est ajouté à l'arrière de la liste chaînée Blocks -> simule la descente des blocs.
+
+- Ajout d'un système de Score et de difficulté (voir InfoBarPanel.java). À des niveaux de difficulté plus élevés, non seulement les blocs deviennent plus petits, mais le jeu se déplace également plus rapidement.
+
+- Ajout d'un GameOver panel (voir GameOverPanel.java). Le bouton Restart est attaché à la méthode startGame() de la classe Hop (en d'autres termes, lorsque le bouton Restart est cliqué, le programme exécute startGame() -> initialiser récursivement le jeu). Le bouton Exit est rattaché à la méthode System.exit(0).
+
 ### Git
 
 1) Changed files -> Commit first then Push
@@ -80,8 +92,6 @@ xSpeed += LATERAL_SPEED  when RIGHT arrow key is pressed
 
 if LEFT or RIGHT arrow key is released, xSpeed = 0
 
-
-
 ySpeed += JUMP_SPEED when UP arrow key is pressed
 
 ySpeed -= DIVE_SPEED when DOWN arrow key is pressed
@@ -91,7 +101,5 @@ ySpeed -= GRAVITY at each frame while Axel is inAir
 ySpeed = max(VERTICAL_SPEED, MAX_FALL_SPEED) to prevent diving too quickly
 
 If Axel is not inAir, in other words, resting on the block, ySpeed = 0
-
-
 
 https://prod.liveshare.vsengsaas.visualstudio.com/join?DCBC09D586FD947CA61F6EEF59325430818E
