@@ -52,7 +52,8 @@ public class Axel {
 		if (jumping == true) {
 			if (onBlock == true) numJumps = 0;
 			if (numJumps < MAX_JUMP_TIMES) {
-				ySpeed = JUMP_SPEED;
+				if (ySpeed < 0) ySpeed += JUMP_SPEED;
+				else ySpeed = JUMP_SPEED;
 				numJumps++;
 				jumping = false;
 			}
