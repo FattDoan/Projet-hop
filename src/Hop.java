@@ -6,7 +6,7 @@ public class Hop {
     public static final int HEIGHT = 800;
     public static final int DELAY = 15;
 	public static final int MAX_LEVEL = 7; // lucky number :D
-	public static final int[] HEIGHT_LEVELS = {80, 800, 2000, 3200, 4800, 7200, 10000};
+	public static final int[] HEIGHT_LEVELS = {0, 80, 800, 2000, 3200, 4800, 7200, 10000};
 
     private final JFrame frame = new JFrame("Hop!");
     private Field field;
@@ -87,7 +87,7 @@ public class Hop {
 
 	}
 	private void updateLevel() {
-		if (currentScore >= HEIGHT_LEVELS[currentLevel + 1] && currentLevel < HEIGHT_LEVELS.length - 1) {
+		if (currentScore >= HEIGHT_LEVELS[currentLevel + 1] && currentLevel < MAX_LEVEL) {
 			currentLevel++;
 		}
 	}
