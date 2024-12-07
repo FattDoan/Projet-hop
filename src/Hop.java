@@ -55,23 +55,33 @@ public class Hop {
 		}
 		return instance;
 	}
-	public static void startGame() {
-		Hop game = getInstance();
-
+	public void resetGameState(Hop game) {
+		//game != null
 		game.currentLevel = 0;
 		game.currentScore = 0;
 		game.gameStarted = false;
 
 		game.field = new Field(WIDTH, HEIGHT - InfoBarPanel.PREF_HEIGHT, game.currentLevel);
-        game.axel = new Axel(game.field, WIDTH/2, Field.START_ALTITUDE);
+		game.axel = new Axel(game.field, WIDTH/2, Field.START_ALTITUDE);
    
 		game.frame.getContentPane().remove(game.gameOverPanel);
 		game.frame.getContentPane().remove(game.gamePanel);
 		game.gamePanel = new GamePanel(game.field, game.axel);
 		game.frame.add(game.gamePanel);
 		game.frame.addKeyListener(game.gamePanel);
-		game.frame.setFocusable(true);
-		
+		game.frame.setFocusable(true);	
+	}
+	public static void startGame() {
+		//Hop game = getInstance();
+		Hop game;
+		if (instance == null) {
+			instance = new Hop();
+			game = instance;
+		}
+		else {
+			game = instance;
+			game.resetGameState(game);
+		}
 		game.timer = new Timer(DELAY, (ActionEvent e) -> {
 			game.round();
 			if (game.over()) {

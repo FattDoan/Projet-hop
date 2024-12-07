@@ -7,6 +7,8 @@ public class GamePanel extends JPanel implements KeyListener {
     private static final int AXEL_WIDTH = 10;
     private static final int AXEL_HEIGHT = 10;
 
+	private Image blockTexture;
+	private Image backgroundTexture;
     private final Axel axel;
     private final Field field;
 
@@ -15,7 +17,9 @@ public class GamePanel extends JPanel implements KeyListener {
         this.axel = axel;
 
         setPreferredSize(new Dimension(field.width, field.height));
-    }
+//    	blockTexture = new ImageIcon("../assets/block.png").getImage();
+//		backgroundTexture = new ImageIcon("../assets/background.png").getImage();
+	}
 	
 	public static int getBlockHeight() {
 		return BLOCK_HEIGHT;
@@ -35,11 +39,27 @@ public class GamePanel extends JPanel implements KeyListener {
 		//     while in Field, (0,0) is the bottom-left
 		// We need to convert the coordinates ONLY in paintComponent (rendering the graphics)
 		// The actual calculation of game physics should only be done in Field coordinates system
-        int H = field.height;
+		
+		/*for (int x = 0; x < field.width; x += 16) {
+			for (int y = 0; y < field.height; y += 16) {
+				g2.drawImage(backgroundTexture, x, y, Math.min(x + 16, field.width), Math.min(y + 16, field.height),
+							0, 0, 16, 16, null);
+			}
+		}*/
+		//g2.fillRect(0, 0, field.width, field.height);
+		
 		for (Block b: field.getBlocks()) {
-            g2.fillRect(b.getX(), H - b.getY(), b.getWidth(), BLOCK_HEIGHT);
-        }
-        g2.fillOval(axel.getX() - AXEL_WIDTH/2, (H - axel.getY()) - AXEL_HEIGHT, AXEL_WIDTH, AXEL_HEIGHT);
+            g2.fillRect(b.getX(), field.height - b.getY(), b.getWidth(), BLOCK_HEIGHT);
+        	/*int blockX = b.getX();
+			int blockY = field.height - b.getY();
+			int blockWidth = b.getWidth();
+			int blockHeight = BLOCK_HEIGHT;
+			for (int x = blockX; x < blockX + blockWidth; x += 16) {	
+				g2.drawImage(blockTexture, x, blockY, Math.min(x + 16, blockX + blockWidth), blockY + blockHeight,
+							0, 0, 16, 16, null);
+			}*/
+		}
+        g2.fillOval(axel.getX() - AXEL_WIDTH/2, (field.height - axel.getY()) - AXEL_HEIGHT, AXEL_WIDTH, AXEL_HEIGHT);
     }
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
