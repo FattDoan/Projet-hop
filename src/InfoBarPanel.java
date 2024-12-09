@@ -3,11 +3,12 @@ import java.awt.*;
 import javax.swing.border.MatteBorder;
 
 public class InfoBarPanel extends JPanel {
+	GameConfig.WindowConfig window = ConfigManager.getInstance().getConfig().window;
 	public static final int PREF_HEIGHT = 50;
 	private JLabel scoreLabel = new JLabel("Score: 0");
 	private JLabel levelLabel = new JLabel("Difficulty: 0");
 	public InfoBarPanel() {
-		setPreferredSize(new Dimension(Hop.WIDTH, PREF_HEIGHT));
+		setPreferredSize(new Dimension(window.getWidth(), PREF_HEIGHT));
 		setLayout(new GridLayout(1,2));
 		setBackground(Color.LIGHT_GRAY);
 		setBorder(new MatteBorder(0, 0, 3, 0, Color.BLUE));

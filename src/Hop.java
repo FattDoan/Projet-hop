@@ -2,13 +2,10 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 public class Hop {
-    public static final int WIDTH = 400;
-    public static final int HEIGHT = 800;
-    public static final int DELAY = 15;
-	public static final int MAX_LEVEL = 7; // lucky number :D
-	public static final int[] HEIGHT_LEVELS = {0, 80, 800, 2000, 3200, 4800, 7200, 10000};
-
-    private final JFrame frame = new JFrame("Hop!");
+	private GameConfig.WindowConfig window = ConfigManager.getInstance().getConfig().window;
+    private GameConfig.gameRulesConfig gameRules = ConfigManager.getInstance().getConfig().gameRules;
+	
+	private final JFrame frame = new JFrame("Hop!");
     private Field field;
     private Axel axel;
     private Timer timer;
@@ -22,12 +19,13 @@ public class Hop {
 	private static Hop instance;
 
     public Hop() {
-		this.currentLevel = 0;
-		this.currentScore = 0;
+		this.currentLevel = gameRules.getStartingLevel();
+		this.currentScore = gameRules.getStartingScore();
 		this.gameStarted = false;
 
-		this.field = new Field(WIDTH, HEIGHT - InfoBarPanel.PREF_HEIGHT, this.currentLevel);
-        this.axel = new Axel(field, WIDTH/2, Field.START_ALTITUDE);
+		this.updateLevel();
+		this.field = new Field(window.getWidth(), window.getHeight() - InfoBarPanel.PREF_HEIGHT, this.currentLevel);
+        this.axel = new Axel(field, window.getWidth()/2, Field.START_ALTITUDE);
 
 		this.gamePanel = new GamePanel(field, axel);
 		
@@ -57,19 +55,21 @@ public class Hop {
 	}
 	public void resetGameState(Hop game) {
 		//game != null
-		game.currentLevel = 0;
-		game.currentScore = 0;
+		game.currentLevel = gameRules.getStartingLevel();
+		game.currentScore = gameRules.getStartingScore();
 		game.gameStarted = false;
 
-		game.field = new Field(WIDTH, HEIGHT - InfoBarPanel.PREF_HEIGHT, game.currentLevel);
-		game.axel = new Axel(game.field, WIDTH/2, Field.START_ALTITUDE);
+		game.updateLevel();
+		game.field = new Field(window.getWidth(), window.getHeight() - InfoBarPanel.PREF_HEIGHT, game.currentLevel);
+		game.axel = new Axel(game.field, window.getWidth()/2, Field.START_ALTITUDE);
    
 		game.frame.getContentPane().remove(game.gameOverPanel);
 		game.frame.getContentPane().remove(game.gamePanel);
 		game.gamePanel = new GamePanel(game.field, game.axel);
 		game.frame.add(game.gamePanel);
 		game.frame.addKeyListener(game.gamePanel);
-		game.frame.setFocusable(true);	
+		game.frame.setFocusable(true);
+		game.frame.revalidate();
 	}
 	public static void startGame() {
 		//Hop game = getInstance();
@@ -82,6 +82,7 @@ public class Hop {
 			game = instance;
 			game.resetGameState(game);
 		}
+		int DELAY = (int) 1000/game.gameRules.getFps(); 
 		game.timer = new Timer(DELAY, (ActionEvent e) -> {
 			game.round();
 			if (game.over()) {
@@ -97,7 +98,8 @@ public class Hop {
 
 	}
 	private void updateLevel() {
-		if (currentScore >= HEIGHT_LEVELS[currentLevel + 1] && currentLevel < MAX_LEVEL) {
+		while (currentLevel < gameRules.getMaxLevel() && 
+			   currentScore >= gameRules.getHeightToReachNextLevel()[currentLevel + 1]) {
 			currentLevel++;
 		}
 	}

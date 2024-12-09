@@ -60,7 +60,11 @@ public class GamePanel extends JPanel implements KeyListener {
 			}*/
 		}
         g2.fillOval(axel.getX() - AXEL_WIDTH/2, (field.height - axel.getY()) - AXEL_HEIGHT, AXEL_WIDTH, AXEL_HEIGHT);
-    }
+    	g2.setColor(Color.RED);
+		for (FireBall fb: field.getFireBalls()) {
+			g2.fillOval(fb.getX() - FireBall.RADIUS, field.height - fb.getY() - 2*FireBall.RADIUS, 2*FireBall.RADIUS, 2*FireBall.RADIUS);
+		}
+	}
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 		switch (key) {

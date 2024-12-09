@@ -6,6 +6,9 @@ public class Axel {
     public static final double LATERAL_SPEED = 300; // pixels/s
 	public static final double MAX_JUMP_TIMES = 2; // allow double jumps
 
+	private	GameConfig.gameRulesConfig gameRules = ConfigManager.getInstance().getConfig().gameRules;
+	private int DELAY = (int) 1000 / gameRules.getFps();
+
     private int x, y;
  	private double xSpeed, ySpeed;
 
@@ -74,6 +77,13 @@ public class Axel {
 					break;
 				}
 			}
+			for (FireBall fb: field.getFireBalls()) {
+				if ( Math.abs(this.y + FireBall.RADIUS - fb.getY()) <= FireBall.RADIUS && 
+					 Math.abs(this.x - fb.getX()) <= FireBall.RADIUS) {
+					surviving = false;
+					break;
+				}
+			}
 		}
 		else onBlock = false;
 	}
@@ -81,8 +91,8 @@ public class Axel {
 		computeMove();
 		ySpeed -= GRAVITY;
 		ySpeed = Math.max(ySpeed, MAX_FALL_SPEED);
-		x += xSpeed * ((double)Hop.DELAY/1000);
-		y += ySpeed * ((double)Hop.DELAY/1000);
+		x += xSpeed * ((double)DELAY/1000);
+		y += ySpeed * ((double)DELAY/1000);
 		
 		x = Math.max(x, 0);
 		x = Math.min(x, field.width);
