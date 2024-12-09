@@ -1,10 +1,42 @@
 # Projet-hop
 
-> Current process: Simulated 169% of the demo. Bonus features to be added
+## TODO in order of importance
 
-## UPDATES (PLEASE READ)
+- [ ] Organize all the configs to the classes
 
--  checkCollision delta (la différence entre Axel y et le Block y) est Block.HEIGHT/2 -> tout au long des tests, il a été prouvé que c'était le plus fiable.
+- [ ] Add main menu and settings menu 
+
+- [ ] Add fallback system for config manager (default_config.json)
+
+- [ ] Add textures (maybe?!)
+
+- [ ] Add multiplayer (should be easy after organizing the code)
+
+## UPDATES 1.0.0beta2
+
+#### <!> The compile commands have been changed to accomodate the config manager (using google Gson library to parse JSON file)
+
+Inside Projet-hop dir (<!> not src directory anymore <!>), to compile :
+
+```bash
+javac -d build -cp .:libs/gson-2.11.0.jar src/*.java
+```
+
+To execute:
+
+```bash
+java -cp build:libs/gson-2.11.0.jar Hop
+```
+
+- Add fireballs to make the game harder (maybe it becomes too hard now idk)
+
+- Setup to add assets (textures), main menu, settings menu and pause menu (pressing Esc while playing)
+
+- Added config manager through JSON file. User are now able to change more advanced game settings (which aren't shown in settings menu).
+
+## UPDATES 1.0.0beta1
+
+- checkCollision delta (la différence entre Axel y et le Block y) est Block.HEIGHT/2 -> tout au long des tests, il a été prouvé que c'était le plus fiable.
 
 - Le bloc dont la valeur y < 0 est supprimé (à l'avant de la liste chaînée Blocks) et s'il y a assez de place en haut, un bloc est ajouté à l'arrière de la liste chaînée Blocks -> simule la descente des blocs.
 
