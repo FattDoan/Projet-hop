@@ -10,9 +10,11 @@ public class Hop {
     private Field field;
     private Axel axel;
     private Timer timer;
+    private MainMenu mainMenu;
     private GamePanel gamePanel;
     private InfoBarPanel infoBarPanel;
     private GameOverPanel gameOverPanel;
+    
     private boolean gameStarted;
     private int currentScore;
     private int currentLevel;
@@ -20,18 +22,15 @@ public class Hop {
     private static Hop instance;
 
     public Hop() {
-        this.currentLevel = gameRules.getStartingLevel();
-        this.currentScore = 0;
-        this.gameStarted = false;
-
-        this.updateLevel();
-        this.field = new Field(window.getWidth(), window.getHeight() - InfoBarPanel.PREF_HEIGHT, this.currentLevel);
-        this.axel = new Axel(field, window.getWidth()/2, block.getStartAltitude());
-
-        this.gamePanel = new GamePanel(field, axel);
-
-        this.infoBarPanel = new InfoBarPanel();
-
+        this.mainMenu = new MainMenu();
+        this.mainMenu.setStartGameListener(Hop::startGame);
+        this.mainMenu.setSettingsListener(() -> {
+            System.out.println("Settings");
+        });
+        this.mainMenu.setExitListener(() -> {
+            System.exit(0);
+        });
+        
         this.gameOverPanel = new GameOverPanel();
         this.gameOverPanel.setExitListener(() -> {
             System.exit(0);
@@ -39,14 +38,11 @@ public class Hop {
         this.gameOverPanel.setRestartListener(Hop::startGame);
 
         frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
-        frame.add(infoBarPanel);
-        frame.add(gamePanel);
-        frame.addKeyListener(gamePanel);
+        frame.add(mainMenu);
         frame.setFocusable(true);
         frame.pack();
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
     }
     public static Hop getInstance() {
         if (instance == null) {
@@ -54,41 +50,37 @@ public class Hop {
         }
         return instance;
     }
-    public void resetGameState(Hop game) {
-        //game != null
-        game.currentLevel = gameRules.getStartingLevel();
+    public static void startApp() {
+        Hop game = getInstance();
+        game.frame.getContentPane().removeAll();
+        game.frame.add(game.mainMenu);
+        game.frame.revalidate();
+    }
+    public static void startGame() {
+        Hop game = getInstance();
+        game.currentLevel = game.gameRules.getStartingLevel();
         game.currentScore = 0;
         game.gameStarted = false;
 
         game.updateLevel();
-        game.field = new Field(window.getWidth(), window.getHeight() - InfoBarPanel.PREF_HEIGHT, game.currentLevel);
-        game.axel = new Axel(game.field, window.getWidth()/2, block.getStartAltitude());
+        game.field = new Field(game.window.getWidth(), game.window.getHeight() - InfoBarPanel.PREF_HEIGHT, game.currentLevel);
+        game.axel = new Axel(game.field, game.window.getWidth()/2, game.block.getStartAltitude());
 
-        game.frame.getContentPane().remove(game.gameOverPanel);
-        game.frame.getContentPane().remove(game.gamePanel);
+        game.frame.getContentPane().removeAll();
+        
+        game.infoBarPanel = new InfoBarPanel();
         game.gamePanel = new GamePanel(game.field, game.axel);
+        game.frame.add(game.infoBarPanel);
         game.frame.add(game.gamePanel);
         game.frame.addKeyListener(game.gamePanel);
         game.frame.setFocusable(true);
         game.frame.revalidate();
-    }
-    public static void startGame() {
-        //Hop game = getInstance();
-        Hop game;
-        if (instance == null) {
-            instance = new Hop();
-            game = instance;
-        }
-        else {
-            game = instance;
-            game.resetGameState(game);
-        }
+         
         int DELAY = (int) 1000/game.gameRules.getFps(); 
         game.timer = new Timer(DELAY, (ActionEvent e) -> {
             game.round();
             if (game.over()) {
                 game.timer.stop();
-
                 game.frame.remove(game.gamePanel);
                 game.frame.add(game.gameOverPanel);
                 game.frame.revalidate();
@@ -125,7 +117,7 @@ public class Hop {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(Hop::startGame);
+        SwingUtilities.invokeLater(Hop::startApp);
     }
 
 }

@@ -39,11 +39,11 @@ public class MainMenu extends JPanel {
         setPreferredSize(new Dimension(window.getWidth(), window.getHeight()));
         setLayout(new FlowLayout(FlowLayout.CENTER, 50, 100));
 
-        JLabel gameOverLabel = new JLabel("Hop!");
-        gameOverLabel.setFont(new Font("Arial", Font.BOLD, 36));
-        gameOverLabel.setPreferredSize(new Dimension(window.getWidth() - 100, 50));
-        gameOverLabel.setHorizontalAlignment(JLabel.CENTER);
-        add(gameOverLabel);
+        JLabel gameLabel = new JLabel("Hop!");
+        gameLabel.setFont(new Font("Arial", Font.BOLD, 32));
+        gameLabel.setPreferredSize(new Dimension(window.getWidth() - 100, 50));
+        gameLabel.setHorizontalAlignment(JLabel.CENTER);
+        add(gameLabel);
 
         JButton startGameButton = new JButton("Start game");
         startGameButton.setFont(new Font("Arial", Font.BOLD, 24));
@@ -54,7 +54,7 @@ public class MainMenu extends JPanel {
         JButton settingsButton = new JButton("Settings");
         settingsButton.setFont(new Font("Arial", Font.BOLD, 24));
         settingsButton.setPreferredSize(new Dimension(window.getWidth() - 200, 50));
-        settingsButton.addActionListener(e -> triggerStartGame());
+        settingsButton.addActionListener(e -> triggerSettings());
         add(settingsButton);
 
 

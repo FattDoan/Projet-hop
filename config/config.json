@@ -5,7 +5,7 @@
     },
     "gameRules": {
         "fps": 60,
-        "startingLevel": 1,
+        "startingLevel": 5,
         "maxLevel": 10,
         "heightToReachNextLevel":               [ 1500, 3000, 5000,10000,20000,40000,80000,120000,240000,500000],
         "minBlockWidthAtLevel":                 [   50,   50,   45,   40,   35,   30,   25,    20,    20,    20],
