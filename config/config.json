@@ -1,38 +1,38 @@
 {
-  "window": {
-    "width": 400,
-    "height": 800
-  },
-  "gameRules": {
-	"fps": 60,
-	"startingScore": 0,
-	"startingLevel": 1,
-	"maxLevel": 7,
-	"heightToReachNextLevel": 				[   0,   80, 800, 2000, 3200, 4800, 7200, 9999],
-    "minBlockWidthAtLevel":   				[  50,   45,  40,   35,   30,   25,   20,   15],
-    "maxBlockWidthAtLevel":   				[ 100,   90,  80,   70,   60,   50,   40,   30],
-  	"numFireBallsAtLevel":    				[   1,    1,   2,    2,    3,    3,    4,    4],
-	"blockFallSpeedPixelsPerFrameAtLevel":  [   1,    1,   1,    2,    2,    2,    3,    3]
-  },
-  "axel": {
-    "width": 10,
-    "height": 10,
-    "maxFallSpeed": -600,
-    "jumpSpeed": 800,
-    "gravity": 25,
-    "diveSpeed": 75,
-    "lateralSpeed": 300,
-    "maxNumJumps": 2
-  },
-  "fireBall": {
-    "radius": 8,
-    "gravity": 7,
-    "maxFallSpeed": -600
-  },
-  "block": {
-    "height": 10,
-    "startAltitude": 50,
-    "altitudeGap": 80
-  }
+    "window": {
+        "width": 400,
+        "height": 800
+    },
+    "gameRules": {
+        "fps": 60,
+        "startingScore": 0,
+        "startingLevel": 1,
+        "maxLevel": 7,
+        "heightToReachNextLevel":               [   0,   80, 800, 2000, 3200, 4800, 7200, 9999],
+        "minBlockWidthAtLevel":                 [  50,   45,  40,   35,   30,   25,   20,   15],
+        "maxBlockWidthAtLevel":                 [ 100,   90,  80,   70,   60,   50,   40,   30],
+        "numFireBallsAtLevel":                  [   1,    1,   2,    2,    3,    3,    4,    4],
+        "blockFallSpeedPixelsPerFrameAtLevel":  [   1,    1,   1,    2,    2,    2,    3,    3]
+    },
+    "axel": {
+        "width": 10,
+        "height": 10,
+        "maxFallSpeed": -600,
+        "jumpSpeed": 800,
+        "gravity": 25,
+        "diveSpeed": 75,
+        "lateralSpeed": 300,
+        "maxNumJumps": 2
+    },
+    "fireBall": {
+        "radius": 8,
+        "gravity": 7,
+        "maxFallSpeed": -600
+    },
+    "block": {
+        "height": 10,
+        "startAltitude": 50,
+        "altitudeGap": 80
+    }
 }
 
