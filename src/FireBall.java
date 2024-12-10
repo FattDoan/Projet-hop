@@ -19,11 +19,11 @@ public class FireBall {
     public FireBall(int x, int y) {
         this(x, y, Utils.randNum(600, 900));
     }
-    public int getX()           { return x; }
-    public int getY()           { return y; }
-    public int getYSpeed()      { return ySpeed; }
-    public boolean isDisappeared() { return disappeared; }
-    public void setY(int newY)  { this.y = newY; }
+    public int getX()               { return x; }
+    public int getY()               { return y; }
+    public int getYSpeed()          { return ySpeed; }
+    public boolean isDisappeared()  { return disappeared; }
+    public void setY(int newY)      { this.y = newY; }
 
 
     public void update() {
