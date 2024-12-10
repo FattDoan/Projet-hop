@@ -21,7 +21,7 @@ public class Hop {
 
     public Hop() {
         this.currentLevel = gameRules.getStartingLevel();
-        this.currentScore = gameRules.getStartingScore();
+        this.currentScore = 0;
         this.gameStarted = false;
 
         this.updateLevel();
@@ -57,7 +57,7 @@ public class Hop {
     public void resetGameState(Hop game) {
         //game != null
         game.currentLevel = gameRules.getStartingLevel();
-        game.currentScore = gameRules.getStartingScore();
+        game.currentScore = 0;
         game.gameStarted = false;
 
         game.updateLevel();
@@ -100,7 +100,7 @@ public class Hop {
     }
     private void updateLevel() {
         while (currentLevel < gameRules.getMaxLevel() && 
-                currentScore >= gameRules.getHeightToReachNextLevel()[currentLevel + 1]) {
+                currentScore >= Utils.at(gameRules.getHeightToReachNextLevel(), currentLevel)) {
             currentLevel++;
         }
     }
@@ -109,7 +109,7 @@ public class Hop {
             gameStarted = true;
         }
         if (axel.isOnBlock()) {
-            currentScore = Math.max(currentScore, field.getPassedAltitude() + axel.getY());
+            currentScore = Math.max(currentScore, field.getPassedAltitude(currentLevel) + axel.getY());
             updateLevel();
         }
         if (gameStarted) {

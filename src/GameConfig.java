@@ -20,7 +20,6 @@ public class GameConfig {
 
     public static class GameRulesConfig {
         private int fps;
-        private int startingScore;
         private int startingLevel;
         private int maxLevel;
         private int[] heightToReachNextLevel;
@@ -33,9 +32,6 @@ public class GameConfig {
         // Getters - boilerplate
         public int getFps() {
             return fps;
-        }
-        public int getStartingScore() {
-            return startingScore;
         }
         public int getStartingLevel() {
             return startingLevel;
