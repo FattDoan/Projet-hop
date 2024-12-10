@@ -2,14 +2,12 @@ import java.util.LinkedList;
 import java.util.Iterator;
 
 public class Field {
-    public static final int ALTITUDE_GAP = 80;// gap entre bloc
-    public static final int START_ALTITUDE = 50; 
-    public static final int[] MIN_BLOCKWIDTH = { 50, 45, 40, 35, 30, 25, 20, 15};
-    public static final int[] MAX_BLOCKWIDTH = {100, 90, 80, 70, 60, 50, 40, 30};
-    public static final int[] NUM_FIREBALLS  = {  1,  1,  2,  2,  3,  3,  4,  4};
-    public static final int[] FALLING_SPEED =  {  1,  1,  1,  2,  2,  2,  3,  3};
+    private GameConfig gameConfig = ConfigManager.getInstance().getConfig();
 
-    GameConfig.WindowConfig window = ConfigManager.getInstance().getConfig().window;
+    private GameConfig.WindowConfig windowC = gameConfig.window;
+    private GameConfig.GameRulesConfig gameRulesC = gameConfig.gameRules;
+    private GameConfig.BlockConfig blockC = gameConfig.block; 
+    private GameConfig.FireBallConfig fireBallC = gameConfig.fireBall;  
 
     public final int width, height;
     private LinkedList<Block> Blocks; // operations addFirst, addLast, removeFirst 
@@ -25,13 +23,14 @@ public class Field {
         this.Blocks = new LinkedList<Block>();
         this.FireBalls = new LinkedList<FireBall>();
         this.passedAltitude = 0; 
-        int blockWidth = Utils.randNum(MIN_BLOCKWIDTH[level], MAX_BLOCKWIDTH[level]);
-        int x = (window.getWidth() - blockWidth)/2; 
-        Blocks.addLast(new Block(x, START_ALTITUDE, blockWidth));
-        for (int i = START_ALTITUDE + ALTITUDE_GAP; i < this.height; i += ALTITUDE_GAP) {
+        int blockCWidth = Utils.randNum(Utils.at(gameRulesC.getMinBlockWidthAtLevel(),level), 
+                                       Utils.at(gameRulesC.getMaxBlockWidthAtLevel(),level));
+        int x = (windowC.getWidth() - blockCWidth)/2; 
+        Blocks.addLast(new Block(x, blockC.getStartAltitude(), blockCWidth));
+        for (int i = blockC.getStartAltitude() + blockC.getAltitudeGap(); i < this.height; i += blockC.getAltitudeGap()) {
             addNewBlock(level);
         }
-        for (int i = 0; i < NUM_FIREBALLS[level]; i++) {
+        for (int i = 0; i < Utils.at(gameRulesC.getNumFireBallsAtLevel(),level); i++) {
             addFireBall(level);
         }
     }
@@ -44,10 +43,10 @@ public class Field {
     }
     public void addNewBlock(int level) {
         Block lastBlock = Blocks.getLast();
-        int y = lastBlock.getY() + ALTITUDE_GAP;
-        int blockWidth = Utils.randNum(MIN_BLOCKWIDTH[level], MAX_BLOCKWIDTH[level]);
-        int x = Utils.randNum(0, width - blockWidth);
-        Blocks.addLast(new Block(x, y, blockWidth));
+        int y = lastBlock.getY() + blockC.getAltitudeGap();
+        int blockCWidth = Utils.randNum(gameRulesC.getMinBlockWidthAtLevel()[level], gameRulesC.getMaxBlockWidthAtLevel()[level]);
+        int x = Utils.randNum(0, width - blockCWidth);
+        Blocks.addLast(new Block(x, y, blockCWidth));
     }
     public void addFireBall(int level) {
         boolean flag = false;
@@ -55,22 +54,22 @@ public class Field {
             int x = Utils.randNum(0, width);
             flag = true;
             for (FireBall fb: FireBalls) {
-                if (Math.abs(fb.getX() - x) < 4 * FireBall.RADIUS) {
+                if (Math.abs(fb.getX() - x) < 4 * fireBallC.getRadius()) {
                     flag = false;
                     break;
                 }
             }
         }
-        FireBalls.addLast(new FireBall(Utils.randNum(0, width), -2*FireBall.RADIUS));   
+        FireBalls.addLast(new FireBall(Utils.randNum(0, width), -2*fireBallC.getRadius()));   
     }
     public void updateBlocks(int level) {
         for (Block b: Blocks) {
-            b.setY(b.getY() - FALLING_SPEED[level]);
+            b.setY(b.getY() - gameRulesC.getBlockFallSpeedPixelsPerFrameAtLevel()[level]);
         }
         if (Blocks.getFirst().getY() < 0) {
             Blocks.removeFirst();
         }
-        if (this.height - Blocks.getLast().getY() >= ALTITUDE_GAP) {
+        if (this.height - Blocks.getLast().getY() >= blockC.getAltitudeGap()) {
             addNewBlock(level);
         }
     }
@@ -86,13 +85,13 @@ public class Field {
             }
         }
 
-        while (FireBalls.size() < NUM_FIREBALLS[level]) {
+        while (FireBalls.size() < Utils.at(gameRulesC.getNumFireBallsAtLevel(),level)) {
             addFireBall(level);
         }
 
     }
     public void update(int level) {
-        passedAltitude += FALLING_SPEED[level];
+        passedAltitude += gameRulesC.getBlockFallSpeedPixelsPerFrameAtLevel()[level];
         updateBlocks(level);
         updateFireBalls(level);
     }

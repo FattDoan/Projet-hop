@@ -3,12 +3,9 @@ public class FireBall {
     private int ySpeed;
     private boolean disappeared = false;
 
-    public static final int RADIUS = 8;
-    public static final int GRAVITY = 7;
-    public static final int MAX_FALL_SPEED = -600;
-
-    private GameConfig.gameRulesConfig gameRules = ConfigManager.getInstance().getConfig().gameRules;
-    private int DELAY = (int) 1000 / gameRules.getFps();
+    private GameConfig.GameRulesConfig gameRulesC = ConfigManager.getInstance().getConfig().gameRules;
+    private GameConfig.FireBallConfig fireBallC = ConfigManager.getInstance().getConfig().fireBall;
+    private int DELAY = (int) 1000 / gameRulesC.getFps();
 
 
     public FireBall(int x, int y, int ySpeed) {
@@ -27,10 +24,10 @@ public class FireBall {
 
 
     public void update() {
-        ySpeed -= GRAVITY;
-        ySpeed = Math.max(ySpeed, MAX_FALL_SPEED);
+        ySpeed -= fireBallC.getGravity();
+        ySpeed = Math.max(ySpeed, fireBallC.getMaxFallSpeed());
         y += ySpeed * ((double)DELAY/1000);
-        if (y < -5*RADIUS) {
+        if (y < -5*fireBallC.getRadius()) {
             disappeared = true;
         }
     }

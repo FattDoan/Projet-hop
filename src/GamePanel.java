@@ -3,9 +3,11 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class GamePanel extends JPanel implements KeyListener {
-    private static final int BLOCK_HEIGHT = 10;
-    private static final int AXEL_WIDTH = 10;
-    private static final int AXEL_HEIGHT = 10;
+    private GameConfig gameConfig = ConfigManager.getInstance().getConfig();
+
+    private GameConfig.AxelConfig axelC = gameConfig.axel;
+    private GameConfig.FireBallConfig fireBallC = gameConfig.fireBall;
+    private GameConfig.BlockConfig blockC = gameConfig.block;
 
     private Image blockTexture;
     private Image backgroundTexture;
@@ -19,10 +21,6 @@ public class GamePanel extends JPanel implements KeyListener {
         setPreferredSize(new Dimension(field.width, field.height));
         //      blockTexture = new ImageIcon("../assets/block.png").getImage();
         //      backgroundTexture = new ImageIcon("../assets/background.png").getImage();
-    }
-
-    public static int getBlockHeight() {
-        return BLOCK_HEIGHT;
     }
 
     @Override
@@ -49,7 +47,7 @@ public class GamePanel extends JPanel implements KeyListener {
         //g2.fillRect(0, 0, field.width, field.height);
 
         for (Block b: field.getBlocks()) {
-            g2.fillRect(b.getX(), field.height - b.getY(), b.getWidth(), BLOCK_HEIGHT);
+            g2.fillRect(b.getX(), field.height - b.getY(), b.getWidth(), blockC.getHeight());
             /*int blockX = b.getX();
               int blockY = field.height - b.getY();
               int blockWidth = b.getWidth();
@@ -59,10 +57,10 @@ public class GamePanel extends JPanel implements KeyListener {
               0, 0, 16, 16, null);
               }*/
         }
-        g2.fillOval(axel.getX() - AXEL_WIDTH/2, (field.height - axel.getY()) - AXEL_HEIGHT, AXEL_WIDTH, AXEL_HEIGHT);
+        g2.fillOval(axel.getX() - axelC.getWidth()/2, (field.height - axel.getY()) - axelC.getHeight(), axelC.getWidth(), axelC.getHeight());
         g2.setColor(Color.RED);
         for (FireBall fb: field.getFireBalls()) {
-            g2.fillOval(fb.getX() - FireBall.RADIUS, field.height - fb.getY() - 2*FireBall.RADIUS, 2*FireBall.RADIUS, 2*FireBall.RADIUS);
+            g2.fillOval(fb.getX() - fireBallC.getRadius(), field.height - fb.getY() - 2*fireBallC.getRadius(), 2*fireBallC.getRadius(), 2*fireBallC.getRadius());
         }
     }
     public void keyPressed(KeyEvent e) {

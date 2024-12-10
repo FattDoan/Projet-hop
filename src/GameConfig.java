@@ -1,6 +1,6 @@
 public class GameConfig {
     public WindowConfig window;
-    public gameRulesConfig gameRules;
+    public GameRulesConfig gameRules;
     public AxelConfig axel;
     public FireBallConfig fireBall;
     public BlockConfig block;
@@ -18,7 +18,7 @@ public class GameConfig {
         }
     }
 
-    public static class gameRulesConfig {
+    public static class GameRulesConfig {
         private int fps;
         private int startingScore;
         private int startingLevel;
@@ -30,7 +30,7 @@ public class GameConfig {
         private int[] blockFallSpeedPixelsPerFrameAtLevel; // WTF? This is so dogshit
                                                            // TODO: change to pixels per second or smth else
 
-                                                           // Getters - boilerplate
+        // Getters - boilerplate
         public int getFps() {
             return fps;
         }

@@ -3,7 +3,8 @@ import java.awt.event.ActionEvent;
 
 public class Hop {
     private GameConfig.WindowConfig window = ConfigManager.getInstance().getConfig().window;
-    private GameConfig.gameRulesConfig gameRules = ConfigManager.getInstance().getConfig().gameRules;
+    private GameConfig.GameRulesConfig gameRules = ConfigManager.getInstance().getConfig().gameRules;
+    private GameConfig.BlockConfig block = ConfigManager.getInstance().getConfig().block;
 
     private final JFrame frame = new JFrame("Hop!");
     private Field field;
@@ -25,7 +26,7 @@ public class Hop {
 
         this.updateLevel();
         this.field = new Field(window.getWidth(), window.getHeight() - InfoBarPanel.PREF_HEIGHT, this.currentLevel);
-        this.axel = new Axel(field, window.getWidth()/2, Field.START_ALTITUDE);
+        this.axel = new Axel(field, window.getWidth()/2, block.getStartAltitude());
 
         this.gamePanel = new GamePanel(field, axel);
 
@@ -61,7 +62,7 @@ public class Hop {
 
         game.updateLevel();
         game.field = new Field(window.getWidth(), window.getHeight() - InfoBarPanel.PREF_HEIGHT, game.currentLevel);
-        game.axel = new Axel(game.field, window.getWidth()/2, Field.START_ALTITUDE);
+        game.axel = new Axel(game.field, window.getWidth()/2, block.getStartAltitude());
 
         game.frame.getContentPane().remove(game.gameOverPanel);
         game.frame.getContentPane().remove(game.gamePanel);
@@ -101,10 +102,10 @@ public class Hop {
         while (currentLevel < gameRules.getMaxLevel() && 
                 currentScore >= gameRules.getHeightToReachNextLevel()[currentLevel + 1]) {
             currentLevel++;
-                }
+        }
     }
     public void round() {
-        if (axel.isOnBlock() == true && axel.getY() != Field.START_ALTITUDE) {
+        if (axel.isOnBlock() == true && axel.getY() != block.getStartAltitude()) {
             gameStarted = true;
         }
         if (axel.isOnBlock()) {

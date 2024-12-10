@@ -8,11 +8,11 @@
         "startingScore": 0,
         "startingLevel": 1,
         "maxLevel": 7,
-        "heightToReachNextLevel":               [   0,   80, 800, 2000, 3200, 4800, 7200, 9999],
-        "minBlockWidthAtLevel":                 [  50,   45,  40,   35,   30,   25,   20,   15],
-        "maxBlockWidthAtLevel":                 [ 100,   90,  80,   70,   60,   50,   40,   30],
-        "numFireBallsAtLevel":                  [   1,    1,   2,    2,    3,    3,    4,    4],
-        "blockFallSpeedPixelsPerFrameAtLevel":  [   1,    1,   1,    2,    2,    2,    3,    3]
+        "heightToReachNextLevel":               [    0,    0, 400, 800, 1600, 3200, 6400,12800],
+        "minBlockWidthAtLevel":                 [   50,   50,  45,  40,   35,   30,   25,   20],
+        "maxBlockWidthAtLevel":                 [  100,  100,  90,  80,   70,   60,   40,   30],
+        "numFireBallsAtLevel":                  [    1,    1,   2,    2,   3,    3,    4,    4],
+        "blockFallSpeedPixelsPerFrameAtLevel":  [    1,    1,   1,    2,   2,    2,    3,    3]
     },
     "axel": {
         "width": 10,

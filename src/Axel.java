@@ -1,13 +1,13 @@
 public class Axel {
-    public static final double MAX_FALL_SPEED = -600; // pixels/s
-    public static final double JUMP_SPEED = 800; // pixels/s
-    public static final double GRAVITY = 25; // pixels/s
-    public static final double DIVE_SPEED = 3 * GRAVITY; // pixels/s   
-    public static final double LATERAL_SPEED = 300; // pixels/s
-    public static final double MAX_JUMP_TIMES = 2; // allow double jumps
+    private GameConfig gameConfig = ConfigManager.getInstance().getConfig();
 
-    private GameConfig.gameRulesConfig gameRules = ConfigManager.getInstance().getConfig().gameRules;
-    private int DELAY = (int) 1000 / gameRules.getFps();
+    private GameConfig.GameRulesConfig gameRulesC = gameConfig.gameRules;
+    private GameConfig.AxelConfig axelC = gameConfig.axel;
+    private GameConfig.FireBallConfig fireBallC = gameConfig.fireBall;
+    private GameConfig.BlockConfig blockC = gameConfig.block;
+ 
+ 
+    private int DELAY = (int) 1000 / gameRulesC.getFps();
 
     private int x, y;
     private double xSpeed, ySpeed;
@@ -47,29 +47,29 @@ public class Axel {
             xSpeed = 0;
         }
         if (left == true) {
-            xSpeed = -LATERAL_SPEED;
+            xSpeed = -axelC.getLateralSpeed();
         }
         if (right == true) {
-            xSpeed = LATERAL_SPEED;
+            xSpeed = axelC.getLateralSpeed();
         }
         if (jumping == true) {
             if (onBlock == true) numJumps = 0;
-            if (numJumps < MAX_JUMP_TIMES) {
-                if (ySpeed < 0) ySpeed += JUMP_SPEED;
-                else ySpeed = JUMP_SPEED;
+            if (numJumps < axelC.getMaxNumJumps()) {
+                if (ySpeed < 0) ySpeed += axelC.getJumpSpeed();
+                else ySpeed = axelC.getJumpSpeed();
                 numJumps++;
                 jumping = false;
             }
         }
         if (diving == true) {
-            ySpeed -= DIVE_SPEED;
+            ySpeed -= axelC.getDiveSpeed();
             // this will keep diving until the player releases the key
         }
     }
     public void checkCollision() {
         if (ySpeed < 0) {
             for (Block b: field.getBlocks()) {
-                if ( Math.abs(this.y - b.getY()) <= GamePanel.getBlockHeight()/2 && 
+                if ( Math.abs(this.y - b.getY()) <= blockC.getHeight()/2 && 
                         b.getX() <= this.x && this.x <= b.getX() + b.getWidth()) {
                     ySpeed = 0;
                     y = b.getY();
@@ -77,20 +77,21 @@ public class Axel {
                     break;
                         }
             }
-            for (FireBall fb: field.getFireBalls()) {
-                if ( Math.abs(this.y + FireBall.RADIUS - fb.getY()) <= FireBall.RADIUS && 
-                     Math.abs(this.x - fb.getX()) <= FireBall.RADIUS) {
-                    surviving = false;
-                    break;
-                        }
-            }
         }
         else onBlock = false;
+
+        for (FireBall fb: field.getFireBalls()) {
+            if ( Math.abs(this.y + fireBallC.getRadius() - fb.getY()) <= fireBallC.getRadius() && 
+                 Math.abs(this.x - fb.getX()) <= fireBallC.getRadius()) {
+                surviving = false;
+                break;
+            }
+        }
     }
     public void update() { 
         computeMove();
-        ySpeed -= GRAVITY;
-        ySpeed = Math.max(ySpeed, MAX_FALL_SPEED);
+        ySpeed -= axelC.getGravity();
+        ySpeed = Math.max(ySpeed, axelC.getMaxFallSpeed());
         x += xSpeed * ((double)DELAY/1000);
         y += ySpeed * ((double)DELAY/1000);
 
