@@ -9,8 +9,8 @@ public class Block {
         this.width = width;
     }
 
-    public int getX() { return x; }
-    public int getY() { return y; }
-    public void setY(int newY) { this.y = newY; }
-    public int getWidth() { return width; }
+    public int getX()           { return x; }
+    public int getY()           { return y; }
+    public void setY(int newY)  { this.y = newY; }
+    public int getWidth()       { return width; }
 }

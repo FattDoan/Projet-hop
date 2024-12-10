@@ -33,10 +33,10 @@ public class Axel {
         this.surviving = true;
     }
 
-    public int getX()               { return x; }
-    public int getY()               { return y; }
-    public boolean isOnBlock()      { return onBlock; }
-    public boolean isSurviving()    { return surviving; }
+    public int getX()                   { return x; }
+    public int getY()                   { return y; }
+    public boolean isOnBlock()          { return onBlock; }
+    public boolean isSurviving()        { return surviving; }
     public void setJumping(boolean val) { jumping = val; }
     public void setDiving(boolean val)  { diving = val; }
     public void setLeft(boolean val)    { left = val; }
@@ -79,7 +79,7 @@ public class Axel {
             }
             for (FireBall fb: field.getFireBalls()) {
                 if ( Math.abs(this.y + FireBall.RADIUS - fb.getY()) <= FireBall.RADIUS && 
-                        Math.abs(this.x - fb.getX()) <= FireBall.RADIUS) {
+                     Math.abs(this.x - fb.getX()) <= FireBall.RADIUS) {
                     surviving = false;
                     break;
                         }
