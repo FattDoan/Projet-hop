@@ -2,7 +2,7 @@
 
 ## TODO in order of importance
 
-- [ ] Organize all the configs to the classes
+- [x] Organize all the configs to the classes
 
 - [ ] Add main menu and settings menu 
 
@@ -14,7 +14,7 @@
 
 ## UPDATES 1.0.0beta2
 
-#### <!> The compile commands have been changed to accomodate the config manager (using google Gson library to parse JSON file)
+#### <!> The compile commands have been changed to accommodate the config manager (using google Gson library to parse JSON file)
 
 Inside Projet-hop dir (<!> not src directory anymore <!>), to compile :
 
