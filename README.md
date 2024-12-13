@@ -4,13 +4,15 @@
 
 - [x] Organize all the configs to the classes
 
-- [ ] Add main menu and settings menu 
+- [x] Add main menu and settings menu 
 
 - [ ] Add fallback system for config manager (default_config.json)
 
-- [ ] Add textures (maybe?!)
-
 - [ ] Add multiplayer (should be easy after organizing the code)
+
+## UPDATES 1.0.0beta3
+
+Added settings menu but the layout is needed to be improved. Now when click Save in the settings menu, it should write back the .json file inside config folder (which means changes are persistant).
 
 ## UPDATES 1.0.0beta2
 

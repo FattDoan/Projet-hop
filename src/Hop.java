@@ -12,6 +12,7 @@ public class Hop {
     private Timer timer;
     private MainMenu mainMenu;
     private GamePanel gamePanel;
+    private SettingsMenu settingsMenu;
     private InfoBarPanel infoBarPanel;
     private GameOverPanel gameOverPanel;
     
@@ -24,13 +25,15 @@ public class Hop {
     public Hop() {
         this.mainMenu = new MainMenu();
         this.mainMenu.setStartGameListener(Hop::startGame);
-        this.mainMenu.setSettingsListener(() -> {
-            System.out.println("Settings");
-        });
+        this.mainMenu.setSettingsListener(Hop::startSettings);
         this.mainMenu.setExitListener(() -> {
             System.exit(0);
         });
-        
+       
+        this.settingsMenu = new SettingsMenu();
+        this.settingsMenu.setBackListener(Hop::startApp);
+
+
         this.gameOverPanel = new GameOverPanel();
         this.gameOverPanel.setExitListener(() -> {
             System.exit(0);
@@ -50,11 +53,19 @@ public class Hop {
         }
         return instance;
     }
+    public static void startSettings() {
+        Hop game = getInstance();
+        game.frame.getContentPane().removeAll();
+        game.frame.add(game.settingsMenu);
+        game.frame.revalidate();
+        game.frame.repaint();
+    }
     public static void startApp() {
         Hop game = getInstance();
         game.frame.getContentPane().removeAll();
         game.frame.add(game.mainMenu);
         game.frame.revalidate();
+        game.frame.repaint();
     }
     public static void startGame() {
         Hop game = getInstance();

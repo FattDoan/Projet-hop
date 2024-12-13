@@ -5,8 +5,7 @@ public class Axel {
     private GameConfig.AxelConfig axelC = gameConfig.axel;
     private GameConfig.FireBallConfig fireBallC = gameConfig.fireBall;
     private GameConfig.BlockConfig blockC = gameConfig.block;
- 
- 
+  
     private int DELAY = (int) 1000 / gameRulesC.getFps();
 
     private int x, y;

@@ -7,7 +7,6 @@ public class FireBall {
     private GameConfig.FireBallConfig fireBallC = ConfigManager.getInstance().getConfig().fireBall;
     private int DELAY = (int) 1000 / gameRulesC.getFps();
 
-
     public FireBall(int x, int y, int ySpeed) {
         this.x = x;
         this.y = y;
@@ -21,7 +20,6 @@ public class FireBall {
     public int getYSpeed()          { return ySpeed; }
     public boolean isDisappeared()  { return disappeared; }
     public void setY(int newY)      { this.y = newY; }
-
 
     public void update() {
         ySpeed -= fireBallC.getGravity();

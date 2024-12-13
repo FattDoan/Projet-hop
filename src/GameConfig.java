@@ -22,6 +22,7 @@ public class GameConfig {
         private int fps;
         private int startingLevel;
         private int maxLevel;
+        private boolean enableFireBalls;
         private int[] heightToReachNextLevel;
         private int[] minBlockWidthAtLevel;
         private int[] maxBlockWidthAtLevel;
@@ -39,6 +40,9 @@ public class GameConfig {
         public int getMaxLevel() {
             return maxLevel;
         }
+        public boolean isFireBallsEnabled() {
+            return enableFireBalls;
+        }
         public int[] getHeightToReachNextLevel() {
             return heightToReachNextLevel;
         }
@@ -54,6 +58,12 @@ public class GameConfig {
         public int[] getBlockFallSpeedPixelsPerFrameAtLevel() {
             return blockFallSpeedPixelsPerFrameAtLevel;
         }
+        public void setFireBallsEnabled(boolean val) {
+            enableFireBalls = val;
+        }
+        public void setStartingLevel(int val) {
+            startingLevel = val;
+        }
     }
     public static class AxelConfig {
         private int width;
@@ -63,7 +73,7 @@ public class GameConfig {
         private double gravity; // pixels/s
         private double diveSpeed; // pixels/s   
         private double lateralSpeed; // pixels/s
-        private double maxNumJumps; // allow double jumps
+        private int maxNumJumps; // allow double jumps
 
         // Getters - boilerplate
         public int getWidth() {
@@ -87,8 +97,11 @@ public class GameConfig {
         public double getLateralSpeed() {
             return lateralSpeed;
         }
-        public double getMaxNumJumps() {
+        public int getMaxNumJumps() {
             return maxNumJumps;
+        }
+        public void setMaxNumJumps(int val) {
+            maxNumJumps = val;
         }
     }
 
@@ -123,6 +136,9 @@ public class GameConfig {
         }
         public int getAltitudeGap() {
             return altitudeGap;
+        }
+        public void setAltitudeGap(int val) {
+            startAltitude = val;
         }
     }
 

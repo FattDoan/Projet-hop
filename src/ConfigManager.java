@@ -1,5 +1,7 @@
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class ConfigManager {
@@ -26,6 +28,15 @@ public class ConfigManager {
             e.printStackTrace();
             // Fallback to default configuration
             config = new GameConfig();
+        }
+    }
+    
+    public void saveConfig() {
+        try (FileWriter writer = new FileWriter("./config/config.json")) {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            gson.toJson(config, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
