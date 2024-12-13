@@ -3,12 +3,6 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class GamePanel extends JPanel implements KeyListener {
-    private GameConfig gameConfig = ConfigManager.getInstance().getConfig();
-
-    private GameConfig.AxelConfig axelC = gameConfig.axel;
-    private GameConfig.FireBallConfig fireBallC = gameConfig.fireBall;
-    private GameConfig.BlockConfig blockC = gameConfig.block;
-
     private Image blockTexture;
     private Image backgroundTexture;
     private final Axel axel;
@@ -25,13 +19,11 @@ public class GamePanel extends JPanel implements KeyListener {
 
     @Override
     public void paintComponent(Graphics g) {
-        // Enable anti-aliasing
         Graphics2D g2 = (Graphics2D) g;
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-        // Continue with default painting
+        // Enable anti-aliasing
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); 
         super.paintComponent(g2);
-
+        
         // <!> ATTENTION:  Coordinate system in JPanel is different from Field
         // i.e In JPanel, (0,0) is the top-left corner 
         //     while in Field, (0,0) is the bottom-left
@@ -47,7 +39,7 @@ public class GamePanel extends JPanel implements KeyListener {
         //g2.fillRect(0, 0, field.width, field.height);
 
         for (Block b: field.getBlocks()) {
-            g2.fillRect(b.getX(), field.height - b.getY(), b.getWidth(), blockC.getHeight());
+            g2.fillRect(b.getX(), field.height - b.getY(), b.getWidth(), Hop.blockC.getHeight());
             /*int blockX = b.getX();
               int blockY = field.height - b.getY();
               int blockWidth = b.getWidth();
@@ -57,10 +49,10 @@ public class GamePanel extends JPanel implements KeyListener {
               0, 0, 16, 16, null);
               }*/
         }
-        g2.fillOval(axel.getX() - axelC.getWidth()/2, (field.height - axel.getY()) - axelC.getHeight(), axelC.getWidth(), axelC.getHeight());
+        g2.fillOval(axel.getX() - Hop.axelC.getWidth()/2, (field.height - axel.getY()) - Hop.axelC.getHeight(), Hop.axelC.getWidth(), Hop.axelC.getHeight());
         g2.setColor(Color.RED);
         for (FireBall fb: field.getFireBalls()) {
-            g2.fillOval(fb.getX() - fireBallC.getRadius(), field.height - fb.getY() - 2*fireBallC.getRadius(), 2*fireBallC.getRadius(), 2*fireBallC.getRadius());
+            g2.fillOval(fb.getX() - Hop.fireBallC.getRadius(), field.height - fb.getY() - 2*Hop.fireBallC.getRadius(), 2*Hop.fireBallC.getRadius(), 2*Hop.fireBallC.getRadius());
         }
     }
     public void keyPressed(KeyEvent e) {

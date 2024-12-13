@@ -2,9 +2,15 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 public class Hop {
-    private GameConfig.WindowConfig window = ConfigManager.getInstance().getConfig().window;
-    private GameConfig.GameRulesConfig gameRules = ConfigManager.getInstance().getConfig().gameRules;
-    private GameConfig.BlockConfig block = ConfigManager.getInstance().getConfig().block;
+    public static ConfigManager configManager = ConfigManager.getInstance();
+    public static GameConfig gameConfig = configManager.getConfig();
+    
+    public static GameConfig.WindowConfig windowC = gameConfig.window;
+    public static GameConfig.GameRulesConfig gameRulesC = gameConfig.gameRules;
+    public static GameConfig.BlockConfig blockC = gameConfig.block;
+    public static GameConfig.AxelConfig axelC = gameConfig.axel;
+    public static GameConfig.FireBallConfig fireBallC = gameConfig.fireBall;
+    public static int DELAY = (int) 1000 / gameRulesC.getFps();
 
     private final JFrame frame = new JFrame("Hop!");
     private Field field;
@@ -69,13 +75,15 @@ public class Hop {
     }
     public static void startGame() {
         Hop game = getInstance();
-        game.currentLevel = game.gameRules.getStartingLevel();
+        gameConfig = configManager.getConfig();
+
+        game.currentLevel = Hop.gameRulesC.getStartingLevel();
         game.currentScore = 0;
         game.gameStarted = false;
 
         game.updateLevel();
-        game.field = new Field(game.window.getWidth(), game.window.getHeight() - InfoBarPanel.PREF_HEIGHT, game.currentLevel);
-        game.axel = new Axel(game.field, game.window.getWidth()/2, game.block.getStartAltitude());
+        game.field = new Field(Hop.windowC.getWidth(), Hop.windowC.getHeight() - InfoBarPanel.PREF_HEIGHT, game.currentLevel);
+        game.axel = new Axel(game.field, Hop.windowC.getWidth()/2, Hop.blockC.getStartAltitude());
 
         game.frame.getContentPane().removeAll();
         
@@ -86,8 +94,7 @@ public class Hop {
         game.frame.addKeyListener(game.gamePanel);
         game.frame.setFocusable(true);
         game.frame.revalidate();
-         
-        int DELAY = (int) 1000/game.gameRules.getFps(); 
+    
         game.timer = new Timer(DELAY, (ActionEvent e) -> {
             game.round();
             if (game.over()) {
@@ -102,13 +109,13 @@ public class Hop {
 
     }
     private void updateLevel() {
-        while (currentLevel < gameRules.getMaxLevel() && 
-                currentScore >= Utils.at(gameRules.getHeightToReachNextLevel(), currentLevel)) {
+        while (currentLevel < Hop.gameRulesC.getMaxLevel() && 
+                currentScore >= Utils.at(Hop.gameRulesC.getHeightToReachNextLevel(), currentLevel)) {
             currentLevel++;
         }
     }
     public void round() {
-        if (axel.isOnBlock() == true && axel.getY() != block.getStartAltitude()) {
+        if (axel.isOnBlock() == true && axel.getY() != Hop.blockC.getStartAltitude()) {
             gameStarted = true;
         }
         if (axel.isOnBlock()) {
@@ -128,6 +135,8 @@ public class Hop {
     }
 
     public static void main(String[] args) {
+        System.setProperty("awt.useSystemAAFontSettings", "on");
+        System.setProperty("swing.aatext", "true");
         SwingUtilities.invokeLater(Hop::startApp);
     }
 

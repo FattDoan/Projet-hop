@@ -1,13 +1,4 @@
 public class Axel {
-    private GameConfig gameConfig = ConfigManager.getInstance().getConfig();
-
-    private GameConfig.GameRulesConfig gameRulesC = gameConfig.gameRules;
-    private GameConfig.AxelConfig axelC = gameConfig.axel;
-    private GameConfig.FireBallConfig fireBallC = gameConfig.fireBall;
-    private GameConfig.BlockConfig blockC = gameConfig.block;
-  
-    private int DELAY = (int) 1000 / gameRulesC.getFps();
-
     private int x, y;
     private double xSpeed, ySpeed;
 
@@ -46,29 +37,29 @@ public class Axel {
             xSpeed = 0;
         }
         if (left == true) {
-            xSpeed = -axelC.getLateralSpeed();
+            xSpeed = -Hop.axelC.getLateralSpeed();
         }
         if (right == true) {
-            xSpeed = axelC.getLateralSpeed();
+            xSpeed = Hop.axelC.getLateralSpeed();
         }
         if (jumping == true) {
             if (onBlock == true) numJumps = 0;
-            if (numJumps < axelC.getMaxNumJumps()) {
-                if (ySpeed < 0) ySpeed += axelC.getJumpSpeed();
-                else ySpeed = axelC.getJumpSpeed();
+            if (numJumps < Hop.axelC.getMaxNumJumps()) {
+                if (ySpeed < 0) ySpeed += Hop.axelC.getJumpSpeed();
+                else ySpeed = Hop.axelC.getJumpSpeed();
                 numJumps++;
                 jumping = false;
             }
         }
         if (diving == true) {
-            ySpeed -= axelC.getDiveSpeed();
+            ySpeed -= Hop.axelC.getDiveSpeed();
             // this will keep diving until the player releases the key
         }
     }
     public void checkCollision() {
         if (ySpeed < 0) {
             for (Block b: field.getBlocks()) {
-                if ( Math.abs(this.y - b.getY()) <= blockC.getHeight()/2 && 
+                if ( Math.abs(this.y - b.getY()) <= Hop.blockC.getHeight()/2 && 
                         b.getX() <= this.x && this.x <= b.getX() + b.getWidth()) {
                     ySpeed = 0;
                     y = b.getY();
@@ -80,8 +71,8 @@ public class Axel {
         else onBlock = false;
 
         for (FireBall fb: field.getFireBalls()) {
-            if ( Math.abs(this.y + fireBallC.getRadius() - fb.getY()) <= fireBallC.getRadius() && 
-                 Math.abs(this.x - fb.getX()) <= fireBallC.getRadius()) {
+            if ( Math.abs(this.y + Hop.fireBallC.getRadius() - fb.getY()) <= Hop.fireBallC.getRadius() && 
+                 Math.abs(this.x - fb.getX()) <= Hop.fireBallC.getRadius()) {
                 surviving = false;
                 break;
             }
@@ -89,10 +80,10 @@ public class Axel {
     }
     public void update() { 
         computeMove();
-        ySpeed -= axelC.getGravity();
-        ySpeed = Math.max(ySpeed, axelC.getMaxFallSpeed());
-        x += xSpeed * ((double)DELAY/1000);
-        y += ySpeed * ((double)DELAY/1000);
+        ySpeed -= Hop.axelC.getGravity();
+        ySpeed = Math.max(ySpeed, Hop.axelC.getMaxFallSpeed());
+        x += xSpeed * ((double)Hop.DELAY/1000);
+        y += ySpeed * ((double)Hop.DELAY/1000);
 
         x = Math.max(x, 0);
         x = Math.min(x, field.width);
