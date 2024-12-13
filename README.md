@@ -10,6 +10,10 @@
 
 - [ ] Add multiplayer (should be easy after organizing the code)
 
+## UPDATES 1.0.0beta4
+
+Improve performance by creating a seperate thread for game loop: game logic (such as calculating positions, check collisions) will use a seperate thread different from the EDT that java swing use. However, if we increase fps above 60 or increase the window size, we may notice some lags. This is, however, the disadvantage of Java Swing as it's not quite good at updating a lot elements for a high paced 2d games. 
+
 ## UPDATES 1.0.0beta3
 
 Added settings menu but the layout is needed to be improved. Now when click Save in the settings menu, it should write back the .json file inside config folder (which means changes are persistant).

@@ -95,7 +95,8 @@ public class Hop {
         game.frame.setFocusable(true);
         game.frame.revalidate();
     
-        game.timer = new Timer(DELAY, (ActionEvent e) -> {
+        /* Legacy game loop
+         * game.timer = new Timer(DELAY, (ActionEvent e) -> {
             game.round();
             if (game.over()) {
                 game.timer.stop();
@@ -106,7 +107,32 @@ public class Hop {
             }
         });
         game.timer.start();
+        game.frame.repaint();
+        */
+        gameLoop(game);
+    }
+    public static void gameLoop(Hop game) {
+        Thread gameLoopThread = new Thread(() -> {
+        while (!game.over()) { 
+            game.round();  
+            SwingUtilities.invokeLater(() -> game.frame.repaint()); // Ensure UI update happens on the EDT 
+            try {
+                Thread.sleep(DELAY); 
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
 
+            if (game.over()) {
+                SwingUtilities.invokeLater(() -> {
+                    game.frame.remove(game.gamePanel);
+                    game.frame.add(game.gameOverPanel);
+                    game.frame.revalidate();
+                    game.frame.repaint();
+                });
+            }
+        }
+    });
+    gameLoopThread.start(); 
     }
     private void updateLevel() {
         while (currentLevel < Hop.gameRulesC.getMaxLevel() && 
@@ -127,7 +153,6 @@ public class Hop {
         }
         axel.update();
         infoBarPanel.update(currentScore, currentLevel);
-        frame.repaint();
     }
 
     public boolean over() {
