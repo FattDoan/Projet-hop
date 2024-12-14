@@ -27,9 +27,7 @@ public class GameConfig {
         private int[] minBlockWidthAtLevel;
         private int[] maxBlockWidthAtLevel;
         private int[] numFireBallsAtLevel;
-        private int[] blockFallSpeedPixelsPerFrameAtLevel; // WTF? This is so dogshit
-                                                           // TODO: change to pixels per second or smth else
-
+        private int[] blockFallSpeedPixelsPerFrameAtLevel; 
         // Getters - boilerplate
         public int getFps() {
             return fps;

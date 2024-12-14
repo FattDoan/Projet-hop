@@ -35,24 +35,10 @@ class SettingBoolean extends JPanel {
     }   
 }
 public class SettingsMenu extends JPanel {
-    private Runnable backListener;
-    private Runnable saveListener;
-
+    private Runnable backListener = Hop::displayMainMenu;
     private SettingSpinner startingLevelSpinner, maxNumJumpsSpinner, altitudeGapSpinner;
     private SettingBoolean enableFireBalls;
 
-    public void setBackListener(Runnable listener) {
-        this.backListener = listener;
-    }
-    public void triggerBack() {
-        if (backListener != null) {
-            backListener.run();
-        }
-    }
-
-    public void setSaveListener(Runnable listener) {
-        this.saveListener = listener;
-    }
     public void triggerSave() {
         int newStartingLevel = (int) startingLevelSpinner.getSpinner().getValue();
         int newMaxNumJumps = (int) maxNumJumpsSpinner.getSpinner().getValue();
@@ -120,7 +106,7 @@ public class SettingsMenu extends JPanel {
         JButton backButton = new JButton("Back");
         backButton.setFont(new Font("Arial", Font.BOLD, 24));
         backButton.setPreferredSize(new Dimension(120, 32));
-        backButton.addActionListener(e -> triggerBack());
+        backButton.addActionListener(e -> Utils.runCode(backListener));
         buttonPanel.add(backButton);
 
         buttonPanel.add(Box.createRigidArea(new Dimension(50, 0)));

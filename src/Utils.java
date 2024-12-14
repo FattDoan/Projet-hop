@@ -21,6 +21,10 @@ public class Utils {
         i = Math.min(i - 1, arr.length - 1);
         return arr[i];
     }
-
+    public static void runCode(Runnable code) {
+        if (code != null) {
+            code.run();
+        }
+    }
 }
 

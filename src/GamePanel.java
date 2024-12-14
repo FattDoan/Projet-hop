@@ -7,10 +7,12 @@ public class GamePanel extends JPanel implements KeyListener {
     private Image backgroundTexture;
     private final Axel axel;
     private final Field field;
+    public static boolean isPaused;
 
     public GamePanel(Field field, Axel axel) {
         this.field = field;
         this.axel = axel;
+        isPaused = false;
 
         setPreferredSize(new Dimension(field.width, field.height));
         //      blockTexture = new ImageIcon("../assets/block.png").getImage();
@@ -75,7 +77,10 @@ public class GamePanel extends JPanel implements KeyListener {
             case KeyEvent.VK_DOWN:
                 axel.setDiving(true);
                 break;
-
+            
+            case KeyEvent.VK_ESCAPE:
+                isPaused = true;
+                break;
         } 
     }
     public void keyTyped(KeyEvent e) { }

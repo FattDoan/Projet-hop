@@ -1,0 +1,92 @@
+{
+  "window": {
+    "width": 400,
+    "height": 800
+  },
+  "gameRules": {
+    "fps": 60,
+    "startingLevel": 1,
+    "maxLevel": 10,
+    "enableFireBalls": true,
+    "heightToReachNextLevel": [
+      1500,
+      3000,
+      5000,
+      10000,
+      20000,
+      40000,
+      80000,
+      120000,
+      240000,
+      500000
+    ],
+    "minBlockWidthAtLevel": [
+      50,
+      50,
+      45,
+      40,
+      35,
+      30,
+      25,
+      20,
+      20,
+      20
+    ],
+    "maxBlockWidthAtLevel": [
+      100,
+      100,
+      90,
+      80,
+      70,
+      60,
+      50,
+      45,
+      40,
+      35
+    ],
+    "numFireBallsAtLevel": [
+      1,
+      2,
+      2,
+      3,
+      3,
+      4,
+      4,
+      5,
+      5,
+      6
+    ],
+    "blockFallSpeedPixelsPerFrameAtLevel": [
+      1,
+      1,
+      2,
+      2,
+      2,
+      3,
+      3,
+      4,
+      4,
+      5
+    ]
+  },
+  "axel": {
+    "width": 10,
+    "height": 10,
+    "maxFallSpeed": -600.0,
+    "jumpSpeed": 800.0,
+    "gravity": 25.0,
+    "diveSpeed": 75.0,
+    "lateralSpeed": 300.0,
+    "maxNumJumps": 4
+  },
+  "fireBall": {
+    "radius": 8,
+    "gravity": 7,
+    "maxFallSpeed": -600
+  },
+  "block": {
+    "height": 10,
+    "startAltitude": 80,
+    "altitudeGap": 80
+  }
+}

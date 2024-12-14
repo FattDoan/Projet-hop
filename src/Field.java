@@ -24,8 +24,10 @@ public class Field {
         for (int i = Hop.blockC.getStartAltitude() + Hop.blockC.getAltitudeGap(); i < this.height; i += Hop.blockC.getAltitudeGap()) {
             addNewBlock(level);
         }
-        for (int i = 0; i < Utils.at(Hop.gameRulesC.getNumFireBallsAtLevel(),level); i++) {
-            addFireBall(level);
+        if (Hop.gameRulesC.isFireBallsEnabled()) {
+            for (int i = 0; i < Utils.at(Hop.gameRulesC.getNumFireBallsAtLevel(),level); i++) {
+                addFireBall(level);
+            }
         }
     }
     public int getPassedAltitude(int level) { 
@@ -93,6 +95,8 @@ public class Field {
     public void update(int level) {
         passedAltitude += Utils.at(Hop.gameRulesC.getBlockFallSpeedPixelsPerFrameAtLevel(),level);
         updateBlocks(level);
-        updateFireBalls(level);
+        if (Hop.gameRulesC.isFireBallsEnabled()) {
+            updateFireBalls(level);
+        }
     }
 }

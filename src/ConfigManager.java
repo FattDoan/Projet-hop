@@ -1,8 +1,6 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 public class ConfigManager {
     private static ConfigManager instance;
@@ -21,18 +19,49 @@ public class ConfigManager {
 
     // Load configuration from JSON file
     private void loadConfig() {
-        try (FileReader reader = new FileReader("./config/config.json")) {
-            Gson gson = new Gson();
-            config = gson.fromJson(reader, GameConfig.class);
+        File configFile = new File("./config.json");
+
+        if (configFile.exists()) {
+            try (FileReader reader = new FileReader(configFile)) {
+                Gson gson = new Gson();
+                config = gson.fromJson(reader, GameConfig.class);
+            } catch (IOException e) {
+                System.out.println("Failed to load configuration file. Fallback to default configuration.");
+                loadDefaultConfig();
+            }
+        } else {
+            System.out.println("Configuration file not found. Fallback to default configuration.");
+            loadDefaultConfig();
+        }
+
+    }
+    private void loadDefaultConfig() {
+        try (InputStream in = getClass().getResourceAsStream("/config/config.json")) {
+            if (in == null) {
+                System.out.println("Currently in dev mode. Loading default configuration from config folder.");
+                try (FileReader reader = new FileReader("./config/default_config.json")) {
+                    Gson gson = new Gson();
+                    config = gson.fromJson(reader, GameConfig.class);
+                } catch (IOException e) {
+                    throw new FileNotFoundException("Default configuration file not found.");
+                }
+
+            }
+            else {
+                Reader reader = new InputStreamReader(in);
+                Gson gson = new Gson();
+                config = gson.fromJson(reader, GameConfig.class);
+            }
+            // if loadDefaultConfig() is called, it means that the configuration file is missing
+            // so we should save the default configuration to a new file for the user
+            saveConfig();
         } catch (IOException e) {
             e.printStackTrace();
-            // Fallback to default configuration
-            config = new GameConfig();
+            throw new RuntimeException("Failed to load default configuration file.");
         }
-    }
-    
+    } 
     public void saveConfig() {
-        try (FileWriter writer = new FileWriter("./config/config.json")) {
+        try (FileWriter writer = new FileWriter("./config.json")) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             gson.toJson(config, writer);
         } catch (IOException e) {
