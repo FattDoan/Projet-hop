@@ -25,20 +25,20 @@ public class ConfigManager {
             try (FileReader reader = new FileReader(configFile)) {
                 Gson gson = new Gson();
                 config = gson.fromJson(reader, GameConfig.class);
-            } catch (IOException e) {
-                System.out.println("Failed to load configuration file. Fallback to default configuration.");
+            } catch (Exception e) {
+                System.out.println("Error while loading configuration file. Falling back to default configuration.");
                 loadDefaultConfig();
             }
         } else {
-            System.out.println("Configuration file not found. Fallback to default configuration.");
+            System.out.println("Configuration file not found. Falling back to default configuration.");
             loadDefaultConfig();
         }
 
     }
     private void loadDefaultConfig() {
-        try (InputStream in = getClass().getResourceAsStream("/config/config.json")) {
+        try (InputStream in = getClass().getResourceAsStream("/config/default_config.json")) {
             if (in == null) {
-                System.out.println("Currently in dev mode. Loading default configuration from config folder.");
+                System.out.println("Can't find default_config.json using getClass(). Loading default configuration from config folder.");
                 try (FileReader reader = new FileReader("./config/default_config.json")) {
                     Gson gson = new Gson();
                     config = gson.fromJson(reader, GameConfig.class);
@@ -56,16 +56,15 @@ public class ConfigManager {
             // so we should save the default configuration to a new file for the user
             saveConfig();
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Failed to load default configuration file.");
+            throw new RuntimeException("Error while loading default configuration file.");
         }
     } 
     public void saveConfig() {
         try (FileWriter writer = new FileWriter("./config.json")) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             gson.toJson(config, writer);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("Error while saving configuration file.");
         }
     }
 

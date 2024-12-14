@@ -40,7 +40,8 @@ public class Hop {
         }
         return instance;
     }
-
+    
+    // for the game loop
     private Timer timer;
 
     public Hop() {
@@ -55,7 +56,6 @@ public class Hop {
         frame.pack();
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
     }
 
     public static void displaySettingsMenu() {
@@ -86,12 +86,12 @@ public class Hop {
         game.frame.add(game.gameOverPanel);
         game.frame.revalidate();
         game.frame.repaint();
-
     }
     public static void startGame() {
         Hop game = getInstance();
         gameConfig = configManager.getConfig();
 
+        // Reset the game state
         game.currentLevel = Hop.gameRulesC.getStartingLevel();
         game.currentScore = 0;
         game.gameStarted = false;
@@ -102,6 +102,7 @@ public class Hop {
 
         game.frame.getContentPane().removeAll();
         
+        // Add the infoBarPanel and gamePanel to the frame
         game.infoBarPanel = new InfoBarPanel();
         game.gamePanel = new GamePanel(game.field, game.axel);
         game.frame.add(game.infoBarPanel);
@@ -144,13 +145,15 @@ public class Hop {
         }
         game.timer.start();
     }
+    // while currentLevel is not max level
+    // and currentScore is greater than the height needed to reach the next level
     private void updateLevel() {
         while (currentLevel < Hop.gameRulesC.getMaxLevel() && 
                 currentScore >= Utils.at(Hop.gameRulesC.getHeightToReachNextLevel(), currentLevel)) {
             currentLevel++;
         }
     }
-    public void round() {
+    private void round() {
         if (axel.isOnBlock() == true && axel.getY() != Hop.blockC.getStartAltitude()) {
             gameStarted = true;
         }
@@ -165,7 +168,7 @@ public class Hop {
         infoBarPanel.update(currentScore, currentLevel);
     }
 
-    public boolean over() {
+    private boolean over() {
         return !axel.isSurviving();
     }
 

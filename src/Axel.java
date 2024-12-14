@@ -53,10 +53,11 @@ public class Axel {
         }
         if (diving == true) {
             ySpeed -= Hop.axelC.getDiveSpeed();
-            // this will keep diving until the player releases the key
+            // this will keep Axel continue diving until the player releases the key
         }
     }
     public void checkCollision() {
+        // check for collision with blocks only when Axel is falling (i.e ySpeed < 0)
         if (ySpeed < 0) {
             for (Block b: field.getBlocks()) {
                 if ( Math.abs(this.y - b.getY()) <= Hop.blockC.getHeight()/2 && 
@@ -70,6 +71,7 @@ public class Axel {
         }
         else onBlock = false;
 
+        // check for collision with fireballs at all times
         for (FireBall fb: field.getFireBalls()) {
             if ( Math.abs(this.y + Hop.fireBallC.getRadius() - fb.getY()) <= Hop.fireBallC.getRadius() && 
                  Math.abs(this.x - fb.getX()) <= Hop.fireBallC.getRadius()) {

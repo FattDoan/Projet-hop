@@ -77,7 +77,7 @@
     "gravity": 25.0,
     "diveSpeed": 75.0,
     "lateralSpeed": 300.0,
-    "maxNumJumps": 4
+    "maxNumJumps": 2
   },
   "fireBall": {
     "radius": 8,
