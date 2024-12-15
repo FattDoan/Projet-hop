@@ -73,7 +73,7 @@ public class Axel {
 
         // check for collision with fireballs at all times
         for (FireBall fb: field.getFireBalls()) {
-            if ( Math.abs(this.y + Hop.fireBallC.getRadius() - fb.getY()) <= Hop.fireBallC.getRadius() && 
+            if ( Math.abs(this.y + Hop.axelC.getHeight()/2 -fb.getY()) <= Hop.fireBallC.getRadius() && 
                  Math.abs(this.x - fb.getX()) <= Hop.fireBallC.getRadius()) {
                 surviving = false;
                 break;
